@@ -37,15 +37,12 @@ class MainActivity : ComponentActivity() {
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun FitnessTrackerScreen(modifier: Modifier = Modifier) {
-    // 1. Separate variables for each metric (Units kept in data but ignored in UI)
     val stepsData = Triple("Steps", "8,542", "steps")
     val caloriesData = Triple("Calories", "420", "kcal")
     val distanceData = Triple("Distance", "6.2", "km")
 
-    // 2. Add variables into a list
     val fitnessData = listOf(stepsData, caloriesData, distanceData)
 
-    // 3. State Management
     val options = fitnessData.map { it.first }
     var expanded by remember { mutableStateOf(false) }
     var selectedOption by remember { mutableStateOf(options[0]) }
@@ -63,7 +60,6 @@ fun FitnessTrackerScreen(modifier: Modifier = Modifier) {
             modifier = Modifier.padding(vertical = 24.dp)
         )
 
-        // 4. Exposed Dropdown Menu Box
         ExposedDropdownMenuBox(
             expanded = expanded,
             onExpandedChange = { expanded = !expanded },
@@ -99,7 +95,7 @@ fun FitnessTrackerScreen(modifier: Modifier = Modifier) {
         }
 
         // 5. Data Boxes
-        fitnessData.forEach { (label, value, _) -> // We ignore the 'unit' part of the Triple here
+        fitnessData.forEach { (label, value, _) ->
             val isSelected = selectedOption == label
 
             Box(
@@ -127,7 +123,6 @@ fun FitnessTrackerScreen(modifier: Modifier = Modifier) {
                         color = if (isSelected) MaterialTheme.colorScheme.primary else Color.Gray
                     )
                     Text(
-                        // Removed $unit - showing only the numeric value
                         text = value,
                         fontSize = 24.sp,
                         fontWeight = FontWeight.Bold,
